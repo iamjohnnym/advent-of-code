@@ -18,10 +18,24 @@ def read_frequencies(frequency_file):
         frequency_list = f.read().splitlines()
     return frequency_list
 
-def resulting_frequency(frequency_list):
+def get_frequencies(frequency_list):
     starting_frequency = [0]
-    frequencies = starting_frequency + frequency_list
+    return starting_frequency + frequency_list
+
+def resulting_frequency(frequency_list):
+    frequencies = get_frequencies(frequency_list)
     return sum(int(frequency) for frequency in frequencies)
+
+def first_repeated_frequency(frequency_list):
+    frequencies = get_frequencies(frequency_list)
+    frequency_results = []
+    last_result = None
+    for index, frequency in enumerate(frequencies):
+        last_result = int(frequency) + int(frequencies[(index + 1)])
+        if not last_result in frequency_results:
+            frequency_results.append(last_result)
+        else:
+            return last_result
 
 
 if __name__ == '__main__':
@@ -29,7 +43,7 @@ if __name__ == '__main__':
         if sys.argv[1] == '1':
             print(resulting_frequency(read_frequencies('frequencies.txt')))
         elif sys.argv[1] == '2':
-            pass
+            print(first_repeated_frequency(read_frequencies('frequencies.txt')))
         else:
             print(f"""Error: Invalid argument
             {help_message()}
