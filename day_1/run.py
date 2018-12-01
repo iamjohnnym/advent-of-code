@@ -8,7 +8,7 @@ def help_message():
     part :: 2 :: Return the results of part two
 
     USAGE:
-    python -m day_1 `part`
+    python -m day_1.run `part`
     """
 
 def read_frequencies(frequency_file):
@@ -19,8 +19,7 @@ def read_frequencies(frequency_file):
     return frequency_list
 
 def get_frequencies(frequency_list):
-    starting_frequency = [0]
-    return starting_frequency + frequency_list
+    return frequency_list
 
 def resulting_frequency(frequency_list):
     frequencies = get_frequencies(frequency_list)
@@ -28,14 +27,15 @@ def resulting_frequency(frequency_list):
 
 def first_repeated_frequency(frequency_list):
     frequencies = get_frequencies(frequency_list)
-    frequency_results = []
-    last_result = None
-    for index, frequency in enumerate(frequencies):
-        last_result = int(frequency) + int(frequencies[(index + 1)])
-        if not last_result in frequency_results:
-            frequency_results.append(last_result)
-        else:
-            return last_result
+    frequency_results = [0]
+    last_result = 0
+    while True:
+        for frequency in frequencies:
+            last_result += int(frequency)
+            if not last_result in frequency_results:
+                frequency_results.append(last_result)
+            else:
+                return last_result
 
 
 if __name__ == '__main__':
