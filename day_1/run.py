@@ -27,13 +27,13 @@ def resulting_frequency(frequency_list):
 
 def first_repeated_frequency(frequency_list):
     frequencies = get_frequencies(frequency_list)
-    frequency_results = [0]
+    frequency_results = {0}
     last_result = 0
     while True:
         for frequency in frequencies:
             last_result += int(frequency)
             if not last_result in frequency_results:
-                frequency_results.append(last_result)
+                frequency_results.add(last_result)
             else:
                 return last_result
 
