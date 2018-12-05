@@ -36,7 +36,7 @@ def checksum_count(checksum):
     {'two': 0, 'three': 1}
     """
 
-    boxes = { 'two': 0, 'three': 0 }
+    boxes = {'two': 0, 'three': 0}
     letter_checked = set()
     for letter in checksum:
         if letter not in letter_checked:
@@ -49,7 +49,7 @@ def checksum_count(checksum):
     return boxes
 
 def get_checksum_from_file(scans):
-    boxes = { 'two': 0, 'three': 0 }
+    boxes = {'two': 0, 'three': 0}
     for checksum in scans:
         checksum_result = checksum_count(checksum)
         boxes['two'] += checksum_result['two']
@@ -60,12 +60,44 @@ def calculate_matches(checksum_file):
     total_matches = get_checksum_from_file(checksum_file)
     return total_matches['two'] * total_matches['three']
 
+def compare_checksum(checksum, previous_checksum=''):
+    """
+    >>> compare_checksum('fghij', 'fguij')
+    'fgij'
+    >>> compare_checksum('fghije', 'fguija')
+    ''
+    """
+    difference = 0
+    stripped_checksum = ""
+    for x, y in zip(checksum, previous_checksum):
+        if x != y:
+            difference += 1
+        else:
+            stripped_checksum += x
+        if difference > 1:
+            return ''
+    return stripped_checksum
+
+def find_similar_checksums(checksum_file):
+    stripped_checksum = ''
+    previous_checksum = ''
+    for checksum in read_file(checksum_file):
+        if previous_checksum:
+            stripped_checksum = compare_checksum(
+                checksum, previous_checksum
+            )
+            if stripped_checksum:
+                return stripped_checksum
+        previous_checksum = checksum
+    return "No matches found"
+
+
 if __name__ == '__main__':
     try:
         if sys.argv[1] == '1':
             print(calculate_matches(read_file('challenge.txt')))
         elif sys.argv[1] == '2':
-            pass
+            print(find_similar_checksums('challenge.txt'))
         elif sys.argv[1] == 't':
             import doctest
             doctest.testmod()
