@@ -60,7 +60,7 @@ def calculate_matches(checksum_file):
     total_matches = get_checksum_from_file(checksum_file)
     return total_matches['two'] * total_matches['three']
 
-def compare_checksum(checksum, previous_checksum=''):
+def compare_checksum(checksum_one, checksum_two):
     """
     >>> compare_checksum('fghij', 'fguij')
     'fgij'
@@ -69,7 +69,7 @@ def compare_checksum(checksum, previous_checksum=''):
     """
     difference = 0
     stripped_checksum = ""
-    for x, y in zip(checksum, previous_checksum):
+    for x, y in zip(checksum_one, checksum_two):
         if x != y:
             difference += 1
         else:
@@ -79,16 +79,16 @@ def compare_checksum(checksum, previous_checksum=''):
     return stripped_checksum
 
 def find_similar_checksums(checksum_file):
+    checksum_list = read_file(checksum_file)
     stripped_checksum = ''
-    previous_checksum = ''
-    for checksum in read_file(checksum_file):
-        if previous_checksum:
-            stripped_checksum = compare_checksum(
-                checksum, previous_checksum
-            )
-            if stripped_checksum:
-                return stripped_checksum
-        previous_checksum = checksum
+    for checksum_one in checksum_list:
+        for checksum_two in checksum_list:
+            if checksum_one != checksum_two:
+                stripped_checksum = compare_checksum(
+                    checksum_one, checksum_two
+                )
+                if stripped_checksum:
+                    return stripped_checksum
     return "No matches found"
 
 
