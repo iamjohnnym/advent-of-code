@@ -5,9 +5,11 @@ import (
 	"io/ioutil"
 )
 
+// file name of the input file
 var fileName string
 
-func ReadChallengeFile(fileName string) string {
+// LoadFile Load input file as a string
+func LoadFile(fileName string) string {
 	content, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		fmt.Println("Unable to read file", err)
