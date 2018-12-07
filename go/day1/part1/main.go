@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"github.com/iamjohnnym/advent-of-code/go/lib"
 )
@@ -11,12 +9,10 @@ import (
 var numbers []int
 
 func main() {
+	// load contents of file
 	content := lib.LoadFile("../challenge.txt")
-	for _, line := range strings.Split(content, "\n") {
-		// convert `line`string to `n`int and append []int{numbers}
-		if n, err := strconv.Atoi(line); err == nil {
-			numbers = append(numbers, n)
-		}
-	}
+	// convert content to an array of `int`
+	numbers := lib.NumberConverter(content)
+	// return sum of array of `int`
 	fmt.Println(lib.Sum(numbers))
 }
