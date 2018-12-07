@@ -3,6 +3,7 @@ package lib
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -11,6 +12,8 @@ import (
 var fileName string
 var iterator []int
 var numbers []int
+var frequency_results map[int]bool
+var last_frequency int
 
 // LoadFile Load input file as a string
 func LoadFile(fileName string) string {
@@ -40,4 +43,19 @@ func NumberConverter(stringContent string) []int {
 		}
 	}
 	return numbers
+}
+
+// FindDuplicateFrequency
+func FindDuplicateFrequency(frequencies []int) []int {
+	frequency_results = make(map[int]bool)
+	for {
+		for _, frequency := range frequencies {
+			last_frequency += frequency
+			if frequency_results[last_frequency] {
+				fmt.Printf("Duplicate Frequency: %d\n", last_frequency)
+				os.Exit(0)
+			}
+			frequency_results[last_frequency] = true
+		}
+	}
 }
