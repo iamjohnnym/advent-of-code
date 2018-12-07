@@ -3,3 +3,9 @@
 .vscode
 __pycache__
 *.pyc
+
+# gofiles
+github.com
+golang.org
+bin/
+pkg/
