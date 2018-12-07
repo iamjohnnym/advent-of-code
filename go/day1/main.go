@@ -8,15 +8,15 @@ import (
 	"github.com/iamjohnnym/advent-of-code/go/lib"
 )
 
-var numbers []float64
+var numbers []int
 
 func main() {
 	content := lib.LoadFile("challenge.txt")
-	for _, line := range strings.Split(string(content), "\n") {
-		if n, err := strconv.ParseFloat(line, 64); err == nil {
+	for _, line := range strings.Split(content, "\n") {
+		// convert `line`string to `n`int and append []int{numbers}
+		if n, err := strconv.Atoi(line); err == nil {
 			numbers = append(numbers, n)
 		}
 	}
-	total := lib.Sum(numbers)
-	fmt.Println(total)
+	fmt.Println(lib.Sum(numbers))
 }

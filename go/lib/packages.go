@@ -7,7 +7,7 @@ import (
 
 // file name of the input file
 var fileName string
-var iterator []float64
+var iterator []int
 
 // LoadFile Load input file as a string
 func LoadFile(fileName string) string {
@@ -19,10 +19,12 @@ func LoadFile(fileName string) string {
 	return string(content)
 }
 
-func Sum(iterator []float64) float64 {
-	total := 0.0
+// Sum iterate through array of ints to determine total sum
+func Sum(iterator []int) int {
+	sum := 0
+	// iterate through array of ints to determine sum
 	for _, value := range iterator {
-		total += value
+		sum += value
 	}
-	return total
+	return sum
 }
