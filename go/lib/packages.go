@@ -3,11 +3,17 @@ package lib
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
+	"strconv"
+	"strings"
 )
 
 // file name of the input file
 var fileName string
 var iterator []int
+var numbers []int
+var frequency_results map[int]bool
+var last_frequency int
 
 // LoadFile Load input file as a string
 func LoadFile(fileName string) string {
@@ -27,4 +33,29 @@ func Sum(iterator []int) int {
 		sum += value
 	}
 	return sum
+}
+
+// NumbersArray
+func NumberConverter(stringContent string) []int {
+	for _, line := range strings.Split(stringContent, "\n") {
+		if n, err := strconv.Atoi(line); err == nil {
+			numbers = append(numbers, n)
+		}
+	}
+	return numbers
+}
+
+// FindDuplicateFrequency
+func FindDuplicateFrequency(frequencies []int) []int {
+	frequency_results = make(map[int]bool)
+	for {
+		for _, frequency := range frequencies {
+			last_frequency += frequency
+			if frequency_results[last_frequency] {
+				fmt.Printf("Duplicate Frequency: %d\n", last_frequency)
+				os.Exit(0)
+			}
+			frequency_results[last_frequency] = true
+		}
+	}
 }
