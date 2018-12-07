@@ -3,11 +3,14 @@ package lib
 import (
 	"fmt"
 	"io/ioutil"
+	"strconv"
+	"strings"
 )
 
 // file name of the input file
 var fileName string
 var iterator []int
+var numbers []int
 
 // LoadFile Load input file as a string
 func LoadFile(fileName string) string {
@@ -27,4 +30,14 @@ func Sum(iterator []int) int {
 		sum += value
 	}
 	return sum
+}
+
+// NumbersArray
+func NumberConverter(stringContent string) []int {
+	for _, line := range strings.Split(stringContent, "\n") {
+		if n, err := strconv.Atoi(line); err == nil {
+			numbers = append(numbers, n)
+		}
+	}
+	return numbers
 }
